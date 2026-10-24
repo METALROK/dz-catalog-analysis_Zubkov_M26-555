@@ -24,3 +24,30 @@ movies = [
      "rating": 7.3, "duration_min": 129, "actors": ["P. Diaz", "T. Chalamet"]},
 ]
 
+
+def average_rating(movies: list) -> float:
+    """Средняя оценка по каталогу"""
+    if not movies:
+        return 0.0
+
+    total = sum([movie["rating"] for movie in movies])
+    return round(total / len(movies), 1)
+
+
+def catalog_age_stats(movies: list, current_year: int=2026) -> tuple:
+    """Статистика по возрасту: старейший, новейший фильмы и средний возраст фильмов"""
+    if not movies:
+        return (0, 0, 0)
+
+    ages = [current_year - movie["year"] for movie in movies]
+    oldest = max(ages)
+    newest = min(ages)
+    average_age = math.ceil(sum(ages) / len(ages))
+    return (oldest, newest, average_age)
+
+
+def duration_in_hours(minutes: float) -> str:
+    """Перевод минут в формат ЧЧ:ММ"""
+    hours = minutes // 60
+    minutes_leftover = minutes % 60
+    return f"{hours}ч {minutes_leftover}м"

@@ -192,3 +192,16 @@ def common_actors(movie1: dict, movie2: dict) -> set:
 def genres_only_in_one(movies_a: list, movies_b: list) -> set:
     """Жанры, которые есть в первом фильме, но нет во втором"""
     return all_genres(movies_a) - all_genres(movies_b)
+
+
+def iter_high_rated(movies: list, min_rating: float=8.0) -> iter:
+    """Фильмы с рейтингом не ниже min_rating"""
+    for movie in movies:
+        if movie["rating"] >= min_rating:
+            yield movie
+
+
+def total_duration_above(movies: list, min_rating: float=7.0) -> int:
+    """Суммарная длительность всех фильмов с рейтингом выше min_rating"""
+    return sum(movie["duration_min"] for movie in movies
+               if movie["rating"] > min_rating)

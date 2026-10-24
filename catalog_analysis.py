@@ -128,3 +128,20 @@ def format_report_line(movie: dict) -> str:
         f'"{title}" ({movie["year"]}) - {movie["rating"]}/10, '
         f'{duration}, жанры: {genres}'
     )
+
+
+def get_rating(movie: dict) -> float:
+    """Рейтинг фильма как ключ сортировки"""
+    return movie["rating"]
+
+
+def titles_sorted_by_rating(movies: list) -> list:
+    """Фильмы, отсортированные по убыванию рейтинга"""
+    sorted_movies = sorted(movies, key=get_rating, reverse=True)
+    return [movie["title"] for movie in sorted_movies]
+
+
+def top_n_by_rating(movies: list, n: int=3) -> list:
+    """Топ n фильмов по рейтингу"""
+    sorted_movies = sorted(movies, key=get_rating, reverse=True)
+    return [(movie["title"], movie["rating"]) for movie in sorted_movies[:n]]

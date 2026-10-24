@@ -145,3 +145,32 @@ def top_n_by_rating(movies: list, n: int=3) -> list:
     """Топ n фильмов по рейтингу"""
     sorted_movies = sorted(movies, key=get_rating, reverse=True)
     return [(movie["title"], movie["rating"]) for movie in sorted_movies[:n]]
+
+
+def count_by_genre(movies: list) -> dict:
+    """Количество фильмов по жанру"""
+    counts = {}
+    for movie in movies:
+        for genre in sorted(movie["genres"]):
+            counts[genre] = counts.get(genre, 0) + 1
+    return counts
+
+
+def actor_filmography(movies: list) -> dict:
+    """Список фильмов по актерам"""
+    filmography = {}
+    for movie in movies:
+        for actor in movie["actors"]:
+            films = filmography.get(actor, [])
+            films.append(movie["title"])
+            filmography[actor] = films
+    return filmography
+
+
+def above_average_ratings(movies: list) -> dict:
+    """Словарь фильмов с рейтингом выше среднего"""
+    average = average_rating(movies)
+    return {
+        movie["title"]: movie["rating"]
+        for movie in movies if movie["rating"] > average
+    }

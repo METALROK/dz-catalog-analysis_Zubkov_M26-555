@@ -205,3 +205,42 @@ def total_duration_above(movies: list, min_rating: float=7.0) -> int:
     """Суммарная длительность всех фильмов с рейтингом выше min_rating"""
     return sum(movie["duration_min"] for movie in movies
                if movie["rating"] > min_rating)
+
+
+def genre_count_key(item: tuple) -> tuple:
+    """Жанр как ключ сортировки"""
+    genre, count = item
+    return (-count, genre)
+
+
+def build_report(movies: list):
+    """Итоговый отчет"""
+    _, _, average_age = catalog_age_stats(movies)
+    movies_by_title = {movie["title"]: movie for movie in movies}
+    genre_counts = sorted(count_by_genre(movies).items(), key=genre_count_key)
+
+    print("ОТЧЕТ ПО КАТАЛОГУ")
+    print(f"Средний рейтинг: {average_rating(movies)}")
+    print(f"Средний возраст фильмов: {average_age} лет")
+    print()
+
+    print("Топ-3 фильма:")
+    for title, _ in top_n_by_rating(movies, 3):
+        print(f"  {format_report_line((movies_by_title[title]))}")
+    print()
+
+    print("Фильмов по жанрам:")
+    for genre, count in genre_counts:
+        print(f"  {genre} - {count}")
+    print()
+
+    print(f"Все жанры каталога: {', '.join(sorted(all_genres(movies)))}")
+    print()
+
+
+def main():
+    build_report(movies)
+
+
+if __name__ == "__main__":
+    main()

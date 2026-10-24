@@ -174,3 +174,21 @@ def above_average_ratings(movies: list) -> dict:
         movie["title"]: movie["rating"]
         for movie in movies if movie["rating"] > average
     }
+
+
+def all_genres(movies: list) -> set:
+    """Множество разных жанров"""
+    genres = set()
+    for movie in movies:
+        genres |= movie["genres"]
+    return genres
+
+
+def common_actors(movie1: dict, movie2: dict) -> set:
+    """Актеры, снимавшиеся в обоих фильмах"""
+    return set(movie1["actors"]) & set(movie2["actors"])
+
+
+def genres_only_in_one(movies_a: list, movies_b: list) -> set:
+    """Жанры, которые есть в первом фильме, но нет во втором"""
+    return all_genres(movies_a) - all_genres(movies_b)

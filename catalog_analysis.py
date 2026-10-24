@@ -104,3 +104,27 @@ def count_long_movies(movies: list, threshold: int=120) -> int:
             count += 1
 
     return count
+
+
+def normalize_title(title: str) -> str:
+    """Приведение названия к Title Case"""
+    words = []
+    for word in title.split():
+        words.append(word[0].upper() + word[1:])
+    return " ".join(words)
+
+
+def make_slug(title: str) -> str:
+    """Превращение названия в слаг"""
+    return title.lower().replace(" ", "-")
+
+
+def format_report_line(movie: dict) -> str:
+    """Описание фильма в одну строку"""
+    title = normalize_title(movie["title"])
+    duration = duration_in_hours(movie["duration_min"])
+    genres = ", ".join(sorted(movie["genres"]))
+    return (
+        f'"{title}" ({movie["year"]}) - {movie["rating"]}/10, '
+        f'{duration}, жанры: {genres}'
+    )

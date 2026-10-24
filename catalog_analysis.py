@@ -51,3 +51,25 @@ def duration_in_hours(minutes: float) -> str:
     hours = minutes // 60
     minutes_leftover = minutes % 60
     return f"{hours}ч {minutes_leftover}м"
+
+
+def rating_tier(rating: float) -> str:
+    """Категория фильма по оценке"""
+    if rating >= 9:
+        return "шедевр"
+
+    if rating >= 7:
+        return "хорошо"
+
+    return "средне" if rating >= 5 else "слабо"
+
+
+def decade_label(year: int) -> str:
+    """Новизна фильма"""
+    match year:
+        case _ if year >= 2020:
+            return "новые"
+        case _ if year >= 2015:
+            return "недавние"
+        case _:
+            return "старые"
